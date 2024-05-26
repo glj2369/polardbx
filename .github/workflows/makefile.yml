@@ -1,0 +1,42 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+
+    - name: Build and push Docker image
+      run: |
+        make
+        cd docker
+        sh image-build.sh /home/polarx/polardbx/build
+      env:
+        DOCKER_BUILDKIT: 1
+        BUILDX_BUILDER: ${{ steps.buildx.outputs.name }}
+
+    - name: Save Docker Image as Tarball
+      run: |
+        docker save -o polardbx-latest.tar polardbx:latest
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: polardbx-docker-image
+        path: polardbx-latest.tar
