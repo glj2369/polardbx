@@ -25,6 +25,7 @@ jobs:
     - name: Install GCC 7 and G++ 7
       run: |
         sudo apt-get update -y
+        sudo apt-get upgrade -y
         sudo apt-get install gcc-7 g++-7 -y
 
     - name: Build and push Docker image
