@@ -22,11 +22,10 @@ jobs:
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1
 
-    - name: Install GCC 7 and G++ 7
+    - name: Set Ubuntu Software Sources to Aliyun
       run: |
-        sudo apt-get update -y
-        sudo apt-get upgrade -y
-        sudo apt-get install gcc-7 g++-7 -y
+        sudo sed -i 's|http://archive.ubuntu.com/ubuntu/|http://mirrors.aliyun.com/ubuntu/|g' /etc/apt/sources.list
+        sudo apt-get update
 
     - name: Build and push Docker image
       run: |
@@ -37,7 +36,11 @@ jobs:
         DOCKER_BUILDKIT: 1
         BUILDX_BUILDER: ${{ steps.buildx.outputs.name }}
 
-  
+    - name: Create Docker Image
+      run: |
+        docker buildx build --platform linux/amd64 -t polardbx:latest .
+      env:
+        DOCKER_BUILDKIT: 1
 
     - name: Save Docker Image as Tarball
       run: |
