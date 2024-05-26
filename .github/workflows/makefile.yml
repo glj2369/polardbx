@@ -22,6 +22,12 @@ jobs:
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1
 
+    - name: Install GCC 7 and G++ 7
+      run: |
+        sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+        sudo apt-get update
+        sudo apt-get install gcc-7 g++-7 -y
+
     - name: Build and push Docker image
       run: |
         make
@@ -30,6 +36,7 @@ jobs:
       env:
         DOCKER_BUILDKIT: 1
         BUILDX_BUILDER: ${{ steps.buildx.outputs.name }}
+
 
     - name: Save Docker Image as Tarball
       run: |
