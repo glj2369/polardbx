@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
 
     steps:
     - name: Checkout repository
@@ -27,10 +27,14 @@ jobs:
         lsb_release -a
     - name: 修改镜像地址
       run: |
-        echo "deb https://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse" | sudo tee /etc/apt/sources.list
-        echo "deb-src https://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
-        echo "deb https://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
-        echo "deb-src https://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+        echo "deb https://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse" | sudo tee /etc/apt/sources.list
+        echo "deb-src https://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+        echo "deb https://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+        echo "deb-src https://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+        echo "deb https://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse" | sudo tee /etc/apt/sources.list
+        echo "deb-src https://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+        echo "deb https://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+        echo "deb-src https://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
         sudo apt-get update
 
     - name: make
