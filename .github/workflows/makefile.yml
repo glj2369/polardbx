@@ -22,13 +22,13 @@ jobs:
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1
 
-    - name: 清理镜像
-      run: 
-       sudo truncate -s 0 /etc/apt/sources.list
-    - name: 设置镜像
-      run: 
-      echo -e "deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ jammy main restricted universe multiverse\n\deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ jammy-updates main restricted universe multiverse\n\debhttps://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ jammy-backports main restricted universe multiverse\n\debhttp://ports.ubuntu.com/ubuntu-ports/ jammy-security main restricted universe multiverse" | sudo tee /etc/apt/sources.list
-      sudo apt-get update
+    - name: 修改镜像地址
+      run: |
+        echo "deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ jammy main restricted universe multiverse" | sudo tee /etc/apt/sources.list
+        echo "deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ jammy-updates main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+        echo "deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ jammy-backports main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+        echo "deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ jammy-security main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+        sudo apt-get update
 
     - name: Build and push Docker image
       run: |
