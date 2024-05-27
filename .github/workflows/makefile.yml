@@ -22,9 +22,10 @@ jobs:
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1
 
-    - name: 查看系统版本
+    - name: 查看系统版本 安装
       run: |
         lsb_release -a
+        sudo apt-get install build-essential
     - name: 修改镜像地址
       run: |
         echo "deb https://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse" | sudo tee /etc/apt/sources.list
