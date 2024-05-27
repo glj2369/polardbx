@@ -27,7 +27,7 @@ jobs:
        sudo truncate -s 0 /etc/apt/sources.list
     - name: 设置镜像
       run: 
-       sudo sed -i 'deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse\ndeb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse\ndeb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse\n' /etc/apt/sources.list
+       sudo sed -i 'deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse\deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse\deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse' /etc/apt/sources.list
        sudo apt-get update
 
     - name: Build and push Docker image
