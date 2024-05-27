@@ -22,7 +22,7 @@ jobs:
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1
 
-    - name: Build and push Docker image
+    - name: 查看系统版本
       run: |
         lsb_release -a
     - name: 修改镜像地址
@@ -33,20 +33,17 @@ jobs:
         echo "deb-src https://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
         sudo apt-get update
 
-    - name: Build and push Docker image
+    - name: make
       run: |
         make
+    - name: 构建镜像
+      run: |
         cd docker
         sh image-build.sh /home/polarx/polardbx/build
       env:
         DOCKER_BUILDKIT: 1
         BUILDX_BUILDER: ${{ steps.buildx.outputs.name }}
 
-    - name: Create Docker Image
-      run: |
-        docker buildx build --platform linux/amd64 -t polardbx:latest .
-      env:
-        DOCKER_BUILDKIT: 1
 
     - name: Save Docker Image as Tarball
       run: |
